@@ -3,15 +3,29 @@
 #include <Wire.h>
 #include <DS3231.h>
 
-uint8_t valve1[2][8]
+struct Valve1
 {
-
-	{},
-	{},
+    uint8_t startTimes[4] = {};
+    uint8_t endTimes[4] = {};
 };
 
+struct Valve2
+{
+    uint8_t startTimes[4] = {};
+    uint8_t endTimes[4] = {};
+};
 
+struct Valve3
+{
+    uint8_t startTimes[4] = {};
+    uint8_t endTimes[4] = {};
+};
 
+struct Valve4
+{
+    uint8_t startTimes[4] = {};
+    uint8_t endTimes[4] = {};
+};
 
 void setup()
 {
@@ -22,5 +36,4 @@ void setup()
 
 void loop()
 {
-
 }
