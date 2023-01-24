@@ -3,16 +3,24 @@
 #include <Wire.h>
 #include <DS3231.h>
 
-Valve v(13);
+uint8_t valve1[2][8]
+{
+
+	{},
+	{},
+};
+
+
+
 
 void setup()
 {
     Serial.begin(115200);
-    Wire.begin();
-    v.setTimes(4, 4, 21, 4);
+    Wire.begin(); // for DS3231
+    Serial.print("Serial and I2C started\n");
 }
 
 void loop()
 {
-    v.write(v.shouldRun());
+
 }
