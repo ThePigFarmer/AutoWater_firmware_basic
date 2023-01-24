@@ -27,6 +27,11 @@ struct Valve4
     uint8_t endTimes[4] = {};
 };
 
+Valve1 v1;
+Valve2 v2;
+Valve1 v3;
+Valve2 v4;
+
 void setup()
 {
     Serial.begin(115200);
