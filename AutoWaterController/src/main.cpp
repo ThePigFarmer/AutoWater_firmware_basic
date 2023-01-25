@@ -1,6 +1,10 @@
 #include <Arduino.h>
 #include <Wire.h>
 
+#ifndef LED_BUILTIN
+#define LED_BUILTIN 2
+#endif
+
 struct Valve1
 {
     uint8_t startTimes[4] = {};
@@ -52,8 +56,10 @@ void loadStructsFromEEPROM()
 
 void putStructsInEEPROM()
 {
+    digitalWrite(LED_BUILTIN, 1);
     EEPROM.put(0, v1);
     EEPROM.put(4, v2);
     EEPROM.put(8, v3);
     EEPROM.put(12, v4);
+    digitalWrite(LED_BUILTIN, 0);
 }
