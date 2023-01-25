@@ -1,6 +1,6 @@
 #include <TimeCalc.h>
 
-uint8_t TimeCalc::refresh()
+uint8_t TimeCalc::minute()
 {
     DateTime now = myRTC.now();
 

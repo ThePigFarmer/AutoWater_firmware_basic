@@ -6,5 +6,5 @@ RTClib myRTC;
 class TimeCalc
 {
 public:
-    uint8_t refresh();
+    uint8_t minute();
 };
