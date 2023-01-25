@@ -1,7 +1,5 @@
 #include <Arduino.h>
-#include <Valve.h>
 #include <Wire.h>
-#include <DS3231.h>
 
 struct Valve1
 {
@@ -32,13 +30,26 @@ Valve2 v2;
 Valve1 v3;
 Valve2 v4;
 
+void loadStructsFromEEPROM();
+void putStructsInEEPROM();
+
 void setup()
 {
     Serial.begin(115200);
     Wire.begin(); // for DS3231
     Serial.print("Serial and I2C started\n");
+
+    loadStructsFromEEPROM();
 }
 
 void loop()
+{
+}
+
+void getStructsFromEEPROM()
+{
+}
+
+void putStructsInEEPROM()
 {
 }
