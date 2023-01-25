@@ -52,4 +52,8 @@ void loadStructsFromEEPROM()
 
 void putStructsInEEPROM()
 {
+    EEPROM.put(0, v1);
+    EEPROM.put(4, v2);
+    EEPROM.put(8, v3);
+    EEPROM.put(12, v4);
 }
