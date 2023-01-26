@@ -36,14 +36,17 @@ struct Valves
     {
         Valve1 v1
     };
+
     struct
     {
         Valve2 v2
     };
+
     struct
     {
         Valve3 v3
     };
+
     struct
     {
         Valve4 v4
