@@ -71,7 +71,7 @@ void loop()
     bnt.read();
 
     // proccess ---------------------------------
-    if (bnt.changedToPress())
+    if (bnt.changedToPressed())
         saveValves();
 
     // output -----------------------------------
