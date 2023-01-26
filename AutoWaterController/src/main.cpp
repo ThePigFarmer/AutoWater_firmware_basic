@@ -1,9 +1,10 @@
 #include <Arduino.h>
+#include <config.h>
 #include <Wire.h>
+#include <EEPROM.h>
+#include <BtButton.h>
 
-#ifndef LED_BUILTIN
-#define LED_BUILTIN 2
-#endif
+BtButton bnt(BUTTON_PIN);
 
 struct Valve1
 {
@@ -44,11 +45,16 @@ void setup()
     Serial.print("Serial and I2C started\n");
 
     loadStructsFromEEPROM();
-}
+} // end setup
 
 void loop()
 {
-}
+    // input
+
+    // proccess
+
+    // output
+} // end loop
 
 void loadStructsFromEEPROM()
 {
