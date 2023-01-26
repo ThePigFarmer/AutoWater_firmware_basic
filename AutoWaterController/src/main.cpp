@@ -49,11 +49,14 @@ void setup()
 
 void loop()
 {
-    // input
+    // input ------------------------------------
+    bnt.read();
 
-    // proccess
+    // proccess ---------------------------------
+    if (bnt.changedToPress())
+        putStructsInEEPROM();
 
-    // output
+    // output -----------------------------------
 } // end loop
 
 void loadStructsFromEEPROM()
