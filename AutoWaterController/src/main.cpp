@@ -6,6 +6,9 @@
 
 BtButton bnt(BUTTON_PIN);
 
+void loadValves();
+void saveValves();
+
 struct Valve1
 {
     uint8_t startTimes[4] = {};
@@ -32,29 +35,11 @@ struct Valve4
 
 struct Valves
 {
-    struct
-    {
-        Valve1 v1
-    };
-
-    struct
-    {
-        Valve2 v2
-    };
-
-    struct
-    {
-        Valve3 v3
-    };
-
-    struct
-    {
-        Valve4 v4
-    };
+    struct Valve1 v1;
+    struct Valve2 v2;
+    struct Valve3 v3;
+    struct Valve4 v4;
 };
-
-void loadValves();
-void saveValves();
 
 void setup()
 {
