@@ -53,8 +53,6 @@ struct Valves
     };
 };
 
-Valves valves;
-
 void loadValves();
 void saveValves();
 
