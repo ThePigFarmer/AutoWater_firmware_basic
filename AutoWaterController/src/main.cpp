@@ -30,13 +30,30 @@ struct Valve4
     uint8_t endTimes[4] = {};
 };
 
-Valve1 v1;
-Valve2 v2;
-Valve1 v3;
-Valve2 v4;
+struct Valves
+{
+    struct
+    {
+        Valve1 v1
+    };
+    struct
+    {
+        Valve2 v2
+    };
+    struct
+    {
+        Valve3 v3
+    };
+    struct
+    {
+        Valve4 v4
+    };
+};
 
-void loadStructsFromEEPROM();
-void putStructsInEEPROM();
+Valves valves;
+
+void loadValves();
+void saveValves();
 
 void setup()
 {
@@ -44,7 +61,7 @@ void setup()
     Wire.begin(); // for DS3231
     Serial.print("Serial and I2C started\n");
 
-    loadStructsFromEEPROM();
+    loadValves();
 } // end setup
 
 void loop()
@@ -54,21 +71,19 @@ void loop()
 
     // proccess ---------------------------------
     if (bnt.changedToPress())
-        putStructsInEEPROM();
+        saveValves();
 
     // output -----------------------------------
 } // end loop
 
-void loadStructsFromEEPROM()
+void loadValves(Valves &valves)
 {
+    EEPROM.get(0, valves);
 }
 
-void putStructsInEEPROM()
+void saveValves(Valves &valves)
 {
     digitalWrite(LED_BUILTIN, 1);
-    EEPROM.put(0, v1);
-    EEPROM.put(4, v2);
-    EEPROM.put(8, v3);
-    EEPROM.put(12, v4);
+    EEPROM.put(0, valves);
     digitalWrite(LED_BUILTIN, 0);
 }
