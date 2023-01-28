@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <config.h>
+#include "config.h"
 #include <Wire.h>
 #include <EEPROM.h>
 #include <BtButton.h>
@@ -40,6 +40,7 @@ struct Valves
     struct Valve3 v3;
     struct Valve4 v4;
 };
+Valves valves;
 
 void setup()
 {
@@ -63,12 +64,12 @@ void loop()
 } // end loop
 
 // functions --------------------------------------------------------------------------------------
-void loadValves(Valves &valves)
+void loadValves()
 {
     EEPROM.get(0, valves);
 }
 
-void saveValves(Valves &valves)
+void saveValves()
 {
     digitalWrite(LED_BUILTIN, 1);
     EEPROM.put(0, valves);
