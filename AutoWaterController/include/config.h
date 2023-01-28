@@ -1,5 +1,4 @@
-#ifndef CONFIG_h
-#define CONFIG_h
+#pragma once
 
 #define V1_PIN 8
 #define V2_PIN 9
@@ -10,6 +9,4 @@
 
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 2
-#endif
-
 #endif
