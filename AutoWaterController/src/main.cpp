@@ -5,8 +5,10 @@
 #include <Wire.h>
 #include <EEPROM.h>
 #include <BtButton.h>
+#include "TimeCalc.h"
 
 BtButton bnt(BUTTON_PIN);
+TimeCalc timeCalc;
 
 struct Valve1
 {
@@ -41,8 +43,10 @@ struct Valves
 }; // 32 bytes
 Valves valves;
 
-void loadValves();
-void saveValves();
+void loadValveData();
+void saveValveData();
+void runValves(uint8_t minutes);
+void intiValvePins();
 
 void setup()
 {
@@ -50,7 +54,7 @@ void setup()
     Wire.begin(); // for DS3231
     Serial.print("Serial and I2C started\n");
 
-    loadValves();
+    loadValveData();
 } // end setup
 
 void loop()
@@ -59,10 +63,14 @@ void loop()
     bnt.read();
 
     // proccess ---------------------------------
+
+    // press for eeprom write
     if (bnt.changedToPressed())
     {
-        saveValves();
+        saveValveData();
     }
+
+    runValves(timeCalc.minute());
 
     // output -----------------------------------
 
@@ -70,14 +78,49 @@ void loop()
 
 // functions --------------------------------------------------------------------------------------
 
-void loadValves()
+void loadValveData()
 {
     EEPROM.get(0, valves);
 }
 
-void saveValves()
+void saveValveData()
 {
     digitalWrite(LED_BUILTIN, 1);
     EEPROM.put(0, valves);
     digitalWrite(LED_BUILTIN, 0);
+}
+
+// run valves - not very DRY
+void runValves(uint8_t minutes)
+{
+    for (uint8_t i = 0; i < 4; i++)
+    {
+        if (between(minutes, valves.v1.startTimes[i], valves.v1.endTimes[i]))
+            digitalWrite(V1_PIN, HIGH);
+        else
+            digitalWrite(V1_PIN, LOW);
+
+        if (between(minutes, valves.v2.startTimes[i], valves.v2.endTimes[i]))
+            digitalWrite(V2_PIN, HIGH);
+        else
+            digitalWrite(V2_PIN, LOW);
+
+        if (between(minutes, valves.v3.startTimes[i], valves.v3.endTimes[i]))
+            digitalWrite(V3_PIN, HIGH);
+        else
+            digitalWrite(V3_PIN, LOW);
+
+        if (between(minutes, valves.v4.startTimes[i], valves.v4.endTimes[i]))
+            digitalWrite(V4_PIN, HIGH);
+        else
+            digitalWrite(V4_PIN, LOW);
+    }
+}
+
+void initValvePins()
+{
+    pinMode(V1_PIN, OUTPUT);
+    pinMode(V2_PIN, OUTPUT);
+    pinMode(V3_PIN, OUTPUT);
+    pinMode(V4_PIN, OUTPUT);
 }

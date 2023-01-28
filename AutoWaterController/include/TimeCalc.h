@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include <DS3231.h>
 
-RTClib myRTC;
+RTClib rtc;
 
 class TimeCalc
 {
