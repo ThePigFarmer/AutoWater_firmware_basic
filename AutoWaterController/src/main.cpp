@@ -1,3 +1,5 @@
+#define between(x, a, b) (((a) <= (x)) && ((x) <= (b)))
+
 #include <Arduino.h>
 #include "config.h"
 #include <Wire.h>
@@ -5,9 +7,6 @@
 #include <BtButton.h>
 
 BtButton bnt(BUTTON_PIN);
-
-void loadValves();
-void saveValves();
 
 struct Valve1
 {
@@ -39,8 +38,11 @@ struct Valves
     struct Valve2 v2;
     struct Valve3 v3;
     struct Valve4 v4;
-};
+}; // 32 bytes
 Valves valves;
+
+void loadValves();
+void saveValves();
 
 void setup()
 {
@@ -58,12 +60,16 @@ void loop()
 
     // proccess ---------------------------------
     if (bnt.changedToPressed())
+    {
         saveValves();
+    }
 
     // output -----------------------------------
+
 } // end loop
 
 // functions --------------------------------------------------------------------------------------
+
 void loadValves()
 {
     EEPROM.get(0, valves);
@@ -75,4 +81,3 @@ void saveValves()
     EEPROM.put(0, valves);
     digitalWrite(LED_BUILTIN, 0);
 }
-// ------------------------------------------------------------------------------------------------
