@@ -12,26 +12,26 @@ TimeCalc timeCalc;
 
 struct Valve1
 {
-    uint8_t startTimes[4] = {};
-    uint8_t endTimes[4] = {};
+    uint16_t startTimes[4] = {540};
+    uint16_t endTimes[4] = {660};
 };
 
 struct Valve2
 {
-    uint8_t startTimes[4] = {};
-    uint8_t endTimes[4] = {};
+    uint16_t startTimes[4] = {};
+    uint16_t endTimes[4] = {};
 };
 
 struct Valve3
 {
-    uint8_t startTimes[4] = {};
-    uint8_t endTimes[4] = {};
+    uint16_t startTimes[4] = {};
+    uint16_t endTimes[4] = {};
 };
 
 struct Valve4
 {
-    uint8_t startTimes[4] = {};
-    uint8_t endTimes[4] = {};
+    uint16_t startTimes[4] = {};
+    uint16_t endTimes[4] = {};
 };
 
 struct Valves
@@ -40,7 +40,7 @@ struct Valves
     struct Valve2 v2;
     struct Valve3 v3;
     struct Valve4 v4;
-}; // 32 bytes
+}; // 64 bytes
 Valves valves;
 
 void loadValveData();
@@ -54,7 +54,7 @@ void setup()
     Wire.begin(); // for DS3231
     Serial.print("Serial and I2C started\n");
 
-    loadValveData();
+    // loadValveData();
 } // end setup
 
 void loop()
@@ -70,10 +70,9 @@ void loop()
         saveValveData();
     }
 
-    runValves(timeCalc.minute());
-
     // output -----------------------------------
-
+    runValves(timeCalc.minute());
+    Serial.println(timeCalc.minute());
 } // end loop
 
 // functions --------------------------------------------------------------------------------------
@@ -87,7 +86,9 @@ void saveValveData()
 {
     digitalWrite(LED_BUILTIN, 1);
     EEPROM.put(0, valves);
+    delay(250);
     digitalWrite(LED_BUILTIN, 0);
+    delay(250);
 }
 
 // run valves - not very DRY
