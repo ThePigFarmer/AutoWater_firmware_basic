@@ -41,20 +41,6 @@ struct Valves
     struct Valve4 v4;
 };
 
-// functions --------------------------------------------------------------------------------------
-void loadValves(Valves &valves)
-{
-    EEPROM.get(0, valves);
-}
-
-void saveValves(Valves &valves)
-{
-    digitalWrite(LED_BUILTIN, 1);
-    EEPROM.put(0, valves);
-    digitalWrite(LED_BUILTIN, 0);
-}
-// ------------------------------------------------------------------------------------------------
-
 void setup()
 {
     Serial.begin(115200);
@@ -75,3 +61,17 @@ void loop()
 
     // output -----------------------------------
 } // end loop
+
+// functions --------------------------------------------------------------------------------------
+void loadValves(Valves &valves)
+{
+    EEPROM.get(0, valves);
+}
+
+void saveValves(Valves &valves)
+{
+    digitalWrite(LED_BUILTIN, 1);
+    EEPROM.put(0, valves);
+    digitalWrite(LED_BUILTIN, 0);
+}
+// ------------------------------------------------------------------------------------------------
