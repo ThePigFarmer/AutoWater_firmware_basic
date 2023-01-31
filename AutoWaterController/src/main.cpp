@@ -47,6 +47,7 @@ void loadValveData();
 void saveValveData();
 void runValves(uint8_t minutes);
 void intiValvePins();
+void test();
 
 void setup()
 {
