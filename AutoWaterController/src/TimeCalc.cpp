@@ -9,10 +9,6 @@ uint8_t TimeCalc::minute()
     return mins;
 }
 
-char const *getTimeStr()
+char TimeCalc::timeStr()
 {
-    DateTime now = rtcNow.now();
-    char timeBuffer[8];
-    sprintf(timeBuffer, "%u:%u:%u", now.hour(), now.minute(), now.second());
-    return timeBuffer;
 }

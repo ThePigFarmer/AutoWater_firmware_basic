@@ -8,4 +8,5 @@ public:
     RTClib rtcNow;
     DS3231 rtc;
     uint8_t minute();
+    char timeStr();
 };

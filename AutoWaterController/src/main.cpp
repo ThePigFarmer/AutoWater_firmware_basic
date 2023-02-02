@@ -62,7 +62,7 @@ void loop()
 {
     // input ------------------------------------
     bnt.read();
-    char *const timeStr = timeCalc.getTimeStr();
+    timeCalc.timeStr();
 
     // proccess ---------------------------------
 
