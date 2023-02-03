@@ -11,9 +11,12 @@ BtButton bnt(BUTTON_PIN);
 RTClib rtc;
 DateTime now;
 
+uint32_t prevMillis;
+const uint16_t timer1 = 1000;
+
 struct Valve1
 {
-    uint16_t startTimes[4] = {540};
+    uint16_t startTimes[4] = {2};
     uint16_t endTimes[4] = {660};
 };
 
@@ -61,16 +64,19 @@ void setup()
 
 void loop()
 {
-    // time
-    DateTime now = rtc.now();
+    if ((millis() - prevMillis) > timer1)
+    {
+        prevMillis = millis();
 
-    // minutes since midnight
-    uint8_t minutesSinceMidnight = now.hour() * 60 + now.minute();
+        // time
+        DateTime now = rtc.now();
 
-    // print time
-    char timeBuffer[9];
-    sprintf("%u:%u:%u", timeBuffer, now.hour(), now.minute(), now.second());
-    Serial.println(timeBuffer);
+        // minutes since midnight
+        uint8_t minutesSinceMidnight = now.hour() * 60 + now.minute();
+
+        runValves(minutesSinceMidnight);
+        Serial.println(minutesSinceMidnight);
+    } // end timed loop
 
     bnt.read();
 
@@ -79,10 +85,7 @@ void loop()
     {
         saveValveData();
     }
-
-    runValves(minutesSinceMidnight);
-    Serial.println(minutesSinceMidnight);
-} // end loop
+} // end main loop
 
 // functions --------------------------------------------------------------------------------------
 
