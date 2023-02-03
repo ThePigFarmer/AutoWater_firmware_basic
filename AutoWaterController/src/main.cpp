@@ -5,10 +5,11 @@
 #include <Wire.h>
 #include <EEPROM.h>
 #include <BtButton.h>
-#include "TimeCalc.h"
+#include <DS3231.h>
 
 BtButton bnt(BUTTON_PIN);
-TimeCalc timeCalc;
+RTClib rtc;
+DateTime now;
 
 struct Valve1
 {
@@ -51,7 +52,7 @@ void test();
 
 void setup()
 {
-    Serial.begin(115200);
+    Serial.begin(9600);
     Wire.begin(); // for DS3231
     Serial.print("Serial and I2C started\n");
 
@@ -60,11 +61,18 @@ void setup()
 
 void loop()
 {
-    // input ------------------------------------
-    bnt.read();
-    timeCalc.timeStr();
+    // time
+    DateTime now = rtc.now();
 
-    // proccess ---------------------------------
+    // minutes since midnight
+    uint8_t minutesSinceMidnight = now.hour() * 60 + now.minute();
+
+    // print time
+    char timeBuffer[9];
+    sprintf("%u:%u:%u", timeBuffer, now.hour(), now.minute(), now.second());
+    Serial.println(timeBuffer);
+
+    bnt.read();
 
     // press for eeprom write
     if (bnt.changedToPressed())
@@ -72,9 +80,8 @@ void loop()
         saveValveData();
     }
 
-    // output -----------------------------------
-    runValves(timeCalc.minute());
-    Serial.println(timeCalc.minute());
+    runValves(minutesSinceMidnight);
+    Serial.println(minutesSinceMidnight);
 } // end loop
 
 // functions --------------------------------------------------------------------------------------
