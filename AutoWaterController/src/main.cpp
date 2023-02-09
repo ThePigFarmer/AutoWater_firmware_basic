@@ -16,8 +16,8 @@ const uint16_t timer1 = 1000;
 
 struct Valve1
 {
-    uint16_t startTimes[4] = {2};
-    uint16_t endTimes[4] = {660};
+    uint16_t startTimes[4] = {0};
+    uint16_t endTimes[4] = {1};
 };
 
 struct Valve2
@@ -59,7 +59,7 @@ void setup()
     Wire.begin(); // for DS3231
     Serial.print("Serial and I2C started\n");
 
-    // loadValveData();
+    // loadValveData(); // not for testing
 } // end setup
 
 void loop()
