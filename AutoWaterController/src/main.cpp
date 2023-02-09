@@ -55,7 +55,7 @@ void test();
 
 void setup()
 {
-    Serial.begin(9600);
+    Serial.begin(MONITOR_SPEED);
     Wire.begin(); // for DS3231
     Serial.print("Serial and I2C started\n");
 
