@@ -101,6 +101,7 @@ void saveValveData()
     delay(250);
     digitalWrite(LED_BUILTIN, 0);
     delay(250);
+    Serial.println(F("saved valves"));
 }
 
 // run valves - not very DRY
