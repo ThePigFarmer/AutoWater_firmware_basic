@@ -22,20 +22,20 @@ struct Valve1
 
 struct Valve2
 {
-    uint16_t startTimes[4] = {};
-    uint16_t endTimes[4] = {};
+    uint16_t startTimes[] = {1};
+    uint16_t endTimes[4] = {2};
 };
 
 struct Valve3
 {
-    uint16_t startTimes[4] = {};
-    uint16_t endTimes[4] = {};
+    uint16_t startTimes[4] = {2};
+    uint16_t endTimes[4] = {3};
 };
 
 struct Valve4
 {
-    uint16_t startTimes[4] = {};
-    uint16_t endTimes[4] = {};
+    uint16_t startTimes[4] = {3};
+    uint16_t endTimes[4] = {4};
 };
 
 struct Valves
