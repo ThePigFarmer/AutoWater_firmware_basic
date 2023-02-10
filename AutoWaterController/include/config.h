@@ -7,7 +7,7 @@
 
 #define BUTTON_PIN 15
 
-#define MONITOR_SPEED
+#define MONITOR_SPEED 115200
 
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 2

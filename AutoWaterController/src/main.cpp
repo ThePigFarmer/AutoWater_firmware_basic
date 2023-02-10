@@ -8,6 +8,7 @@
 #include <DS3231.h>
 
 BtButton bnt(BUTTON_PIN);
+DS3231 ds3231rtc;
 RTClib rtc;
 DateTime now;
 
@@ -22,7 +23,7 @@ struct Valve1
 
 struct Valve2
 {
-    uint16_t startTimes[] = {1};
+    uint16_t startTimes[4] = {1};
     uint16_t endTimes[4] = {2};
 };
 
@@ -80,10 +81,21 @@ void loop()
 
     bnt.read();
 
-    // press for eeprom write
-    if (bnt.changedToPressed())
+    if (bnt.changed())
     {
-        saveValveData();
+        // press for eeprom write
+        if (bnt.isPressed())
+        {
+            saveValveData();
+        }
+
+        // hold for DS3231 time set
+        if (bnt.isHeld())
+        {
+            ds3231rtc.setHour(0);
+            ds3231rtc.setMinute(0);
+            Serial.println(F("DS3231 time: 0:0:0"));
+        }
     }
 } // end main loop
 
