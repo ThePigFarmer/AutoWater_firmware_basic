@@ -8,9 +8,8 @@
 #include <DS3231.h>
 
 BtButton bnt(BUTTON_PIN);
-DS3231 ds3231rtc;
-RTClib rtc;
-DateTime now;
+DS3231 rtc;
+Time t;
 
 uint32_t prevMillis;
 const uint16_t timer1 = 1000;
@@ -69,14 +68,14 @@ void loop()
     {
         prevMillis = millis();
 
-        // time
-        DateTime now = rtc.now();
+        t = rtc.getTime(); // read DS3231 registers at once
 
-        // minutes since midnight
-        uint8_t minutesSinceMidnight = now.hour() * 60 + now.minute();
+        uint16_t minutesSinceMidnight = t.hour * 60 + t.min;
 
         runValves(minutesSinceMidnight);
         Serial.println(minutesSinceMidnight);
+        
+        Serial.println(F("\n"));
     } // end timed loop
 
     bnt.read();
@@ -87,14 +86,7 @@ void loop()
         if (bnt.isPressed())
         {
             saveValveData();
-        }
-
-        // hold for DS3231 time set
-        if (bnt.isHeld())
-        {
-            ds3231rtc.setHour(0);
-            ds3231rtc.setMinute(0);
-            Serial.println(F("DS3231 time: 0:0:0"));
+            Serial.println(F("Saved valves to EEPROM"));
         }
     }
 } // end main loop
@@ -108,41 +100,64 @@ void loadValveData()
 
 void saveValveData()
 {
-    digitalWrite(LED_BUILTIN, 1);
     EEPROM.put(0, valves);
-    delay(250);
-    digitalWrite(LED_BUILTIN, 0);
-    delay(250);
-    Serial.println(F("saved valves"));
 }
 
 // run valves - not very DRY
 void runValves(uint8_t minutes)
 {
+    loadValveData();
+    bool exitLoop;
+    
+    // valve 1
+    exitLoop = false;
     for (uint8_t i = 0; i < 4; i++)
     {
         if (between(minutes, valves.v1.startTimes[i], valves.v1.endTimes[i]))
+        {
             digitalWrite(V1_PIN, HIGH);
+        }
         else
+        {
             digitalWrite(V1_PIN, LOW);
+        }
+    }
 
+    // valve 2
+    exitLoop = false;
+    for (uint8_t i = 0; i < 4; i++)
+    {
         if (between(minutes, valves.v2.startTimes[i], valves.v2.endTimes[i]))
+        {
             digitalWrite(V2_PIN, HIGH);
+        }
         else
+        {
             digitalWrite(V2_PIN, LOW);
+        }
+    }
 
+    // valve 3
+    for (uint8_t i = 0; i < 4; i++)
+    {
         if (between(minutes, valves.v3.startTimes[i], valves.v3.endTimes[i]))
+        {
             digitalWrite(V3_PIN, HIGH);
+        }
         else
+        {
             digitalWrite(V3_PIN, LOW);
-
+        }
+}
+    for (uint8_t i = 0; i < 4; i++)
+    {
         if (between(minutes, valves.v4.startTimes[i], valves.v4.endTimes[i]))
             digitalWrite(V4_PIN, HIGH);
         else
             digitalWrite(V4_PIN, LOW);
     }
 }
-
+}
 void initValvePins()
 {
     pinMode(V1_PIN, OUTPUT);
