@@ -74,7 +74,7 @@ void loop()
 
         runValves(minutesSinceMidnight);
         Serial.println(minutesSinceMidnight);
-        
+
         Serial.println(F("\n"));
     } // end timed loop
 
@@ -108,7 +108,7 @@ void runValves(uint8_t minutes)
 {
     loadValveData();
     bool exitLoop;
-    
+
     // valve 1
     exitLoop = false;
     for (uint8_t i = 0; i < 4; i++)
@@ -123,7 +123,8 @@ void runValves(uint8_t minutes)
             digitalWrite(V1_PIN, LOW);
         }
 
-        if(exitLoop) break;
+        if (exitLoop)
+            break;
     }
 
     // valve 2
@@ -140,7 +141,8 @@ void runValves(uint8_t minutes)
             digitalWrite(V2_PIN, LOW);
         }
 
-        if(exitLoop) break;
+        if (exitLoop)
+            break;
     }
 
     // valve 3
@@ -157,7 +159,8 @@ void runValves(uint8_t minutes)
             digitalWrite(V3_PIN, LOW);
         }
 
-        if(exitLoop) break;
+        if (exitLoop)
+            break;
     }
 
     // valve 4
@@ -174,10 +177,10 @@ void runValves(uint8_t minutes)
             digitalWrite(V4_PIN, LOW);
         }
 
-        if(exitLoop) break;
+        if (exitLoop)
+            break;
     }
 }
-
 
 void initValvePins()
 {
