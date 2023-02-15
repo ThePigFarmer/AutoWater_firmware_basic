@@ -116,11 +116,14 @@ void runValves(uint8_t minutes)
         if (between(minutes, valves.v1.startTimes[i], valves.v1.endTimes[i]))
         {
             digitalWrite(V1_PIN, HIGH);
+            exitLoop = true;
         }
         else
         {
             digitalWrite(V1_PIN, LOW);
         }
+
+        if(exitLoop) break;
     }
 
     // valve 2
@@ -130,34 +133,52 @@ void runValves(uint8_t minutes)
         if (between(minutes, valves.v2.startTimes[i], valves.v2.endTimes[i]))
         {
             digitalWrite(V2_PIN, HIGH);
+            exitLoop = true;
         }
         else
         {
             digitalWrite(V2_PIN, LOW);
         }
+
+        if(exitLoop) break;
     }
 
     // valve 3
+    exitLoop = false;
     for (uint8_t i = 0; i < 4; i++)
     {
         if (between(minutes, valves.v3.startTimes[i], valves.v3.endTimes[i]))
         {
             digitalWrite(V3_PIN, HIGH);
+            exitLoop = true;
         }
         else
         {
             digitalWrite(V3_PIN, LOW);
         }
-}
+
+        if(exitLoop) break;
+    }
+
+    // valve 4
+    exitLoop = false;
     for (uint8_t i = 0; i < 4; i++)
     {
         if (between(minutes, valves.v4.startTimes[i], valves.v4.endTimes[i]))
+        {
             digitalWrite(V4_PIN, HIGH);
+            exitLoop = true;
+        }
         else
+        {
             digitalWrite(V4_PIN, LOW);
+        }
+
+        if(exitLoop) break;
     }
 }
-}
+
+
 void initValvePins()
 {
     pinMode(V1_PIN, OUTPUT);
