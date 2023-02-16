@@ -5,7 +5,7 @@
 #define V3_PIN 18
 #define V4_PIN 19
 
-#define BUTTON_PIN 7 
+#define BUTTON_PIN 7
 
 #define MONITOR_SPEED 115200
 

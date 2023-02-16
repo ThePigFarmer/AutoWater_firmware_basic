@@ -3,13 +3,19 @@
 #include <Arduino.h>
 #include "config.h"
 #include <Wire.h>
+#include <WiFi.h>
 #include <EEPROM.h>
 #include <BtButton.h>
 #include <DS3231.h>
+#include "Broker.h"
 
 BtButton bnt(BUTTON_PIN);
 DS3231 rtc;
 Time t;
+broker mqtt;
+
+const char *ssid = "ssid";
+const char *password = "password";
 
 uint32_t prevMillis;
 const uint16_t timer1 = 1000;
@@ -56,8 +62,26 @@ void test();
 void setup()
 {
     Serial.begin(MONITOR_SPEED);
+    delay(500);
     Wire.begin(); // for DS3231
+    delay(500);
     Serial.print("Serial and I2C started\n");
+
+    WiFi.mode(WIFI_STA); // Optional
+    WiFi.begin(ssid, password);
+    Serial.println("\nConnecting");
+
+    while (WiFi.status() != WL_CONNECTED)
+    {
+        Serial.print(".");
+        delay(100);
+    }
+
+    Serial.println("\nConnected to the WiFi network");
+    Serial.print("Local ESP32 IP: ");
+    Serial.println(WiFi.localIP());
+
+    mqtt.setup();
 
     // loadValveData(); // not for testing
 } // end setup
