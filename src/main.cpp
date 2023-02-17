@@ -7,12 +7,12 @@
 #include <EEPROM.h>
 #include <BtButton.h>
 #include <DS3231.h>
-#include "Broker.h"
+#include "MqttHandler.h"
 
 BtButton bnt(BUTTON_PIN);
 DS3231 rtc;
 Time t;
-broker mqtt;
+MqttHandler mqtt;
 
 const char *ssid = "ssid";
 const char *password = "password";
@@ -113,6 +113,8 @@ void loop()
             Serial.println(F("Saved valves to EEPROM"));
         }
     }
+
+    mqtt.loop();
 } // end main loop
 
 // functions --------------------------------------------------------------------------------------

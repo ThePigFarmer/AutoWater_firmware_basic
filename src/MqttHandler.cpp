@@ -1,15 +1,21 @@
-#include <Broker.h>
+#include <MqttHandler.h>
 
-char *mqttServer = "broker.hivemq.com";
-int mqttPort = 1883;
-
-void broker::setup()
+void MqttHandler::setup()
 {
     mqttClient.setServer(mqttServer, mqttPort);
     mqttClient.setCallback(callback);
 }
 
-void reconnect()
+void MqttHandler::loop()
+{
+    if (!mqttClient.connected())
+        reconnect();
+    mqttClient.loop();
+
+    mqttClient.publish("esp32/temperature", tempString);
+}
+
+void MqttHandler::reconnect()
 {
     Serial.println("Connecting to MQTT Broker...");
     while (!mqttClient.connected())
@@ -24,5 +30,15 @@ void reconnect()
             // subscribe to topic
             mqttClient.subscribe("esp32/message");
         }
+    }
+}
+
+void MqttHandler::callback(char *topic, byte *message, unsigned int length)
+{
+    Serial.print("Callback - ");
+    Serial.print("Message:");
+    for (int i = 0; i < length; i++)
+    {
+        Serial.print((char)message[i]);
     }
 }
