@@ -15,7 +15,7 @@ Time t;
 const char *ssid = "ssid";
 const char *password = "password";
 const uint16_t port = 8090;
-const char *host = "192.168.83"
+const char *host = "192.168.83";
 
 uint32_t prevMillis;
 const uint16_t timer1 = 1000;
