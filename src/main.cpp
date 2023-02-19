@@ -7,15 +7,15 @@
 #include <EEPROM.h>
 #include <BtButton.h>
 #include <DS3231.h>
-#include "MqttHandler.h"
 
 BtButton bnt(BUTTON_PIN);
 DS3231 rtc;
 Time t;
-MqttHandler mqtt;
 
 const char *ssid = "ssid";
 const char *password = "password";
+const uint16_t port = 8090;
+const char *host = "192.168.83";
 
 uint32_t prevMillis;
 const uint16_t timer1 = 1000;
@@ -81,13 +81,28 @@ void setup()
     Serial.print("Local ESP32 IP: ");
     Serial.println(WiFi.localIP());
 
-    mqtt.setup();
-
     // loadValveData(); // not for testing
 } // end setup
 
 void loop()
 {
+    WiFiClient client;
+
+    if (!client.connect(host, port))
+    {
+        Serial.println(F("host conn failed"));
+        delay(1000);
+        return;
+    }
+
+    Serial.println("conn succ");
+    client.print("hello from esp");
+    client.stop();
+
+    delay(10000);
+
+
+    // timed loop
     if ((millis() - prevMillis) > timer1)
     {
         prevMillis = millis();
@@ -114,7 +129,6 @@ void loop()
         }
     }
 
-    mqtt.loop();
 } // end main loop
 
 // functions --------------------------------------------------------------------------------------
