@@ -12,3 +12,5 @@
 #ifndef LED_BUILTIN
 #define LED_BUILTIN 2
 #endif
+
+#define HTTP_PORT 80
